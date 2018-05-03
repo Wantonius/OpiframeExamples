@@ -1,0 +1,33 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { RouterModule,Routes} from '@angular/router';
+
+import { CarService } from './car.service';
+import { CarList} from './carlist.component';
+import { CarForm} from './carform.component';
+
+import { AppComponent } from './app.component';
+
+const appRoutes: Routes = [
+	{path:"CarList", component: CarList},
+	{path:"CarForm", component: CarForm}
+]
+
+@NgModule({
+  declarations: [
+    AppComponent,
+	CarList,
+	CarForm
+  ],
+  imports: [
+    BrowserModule,
+	FormsModule,
+	RouterModule.forRoot(appRoutes),
+	HttpModule
+  ],
+  providers: [CarService],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
