@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            Enter name:
+            <h:inputText id="name" value="#{bmiBean.name}"></h:inputText>
+                <hr></hr>
+            Enter weight (in kg):
+            <h:inputText id="weight" value="#{bmiBean.weight}">
+                <f:validateDoubleRange
+                    minimum="0.0" 
+                    maximum="200.0"/>
+            </h:inputText>
+            <br></br>
+            Enter height (in cm):
+            <h:inputText id="height" value="#{bmiBean.height}">
+                <f:validateDoubleRange 
+                    minimum="50.0"
+                    maximum="250.0" />
+            </h:inputText>
+            <br></br>
+            <h:commandButton id="submit" value="Submit" action="#{bmiBean.calculate}"></h:commandButton>
+        </h:form>
+    </h:body>
+</html>
+

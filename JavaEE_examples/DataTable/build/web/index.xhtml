@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+  <h:head>
+    <h:outputStylesheet library="css" name="contactList.css"></h:outputStylesheet>
+    <title>Data Table</title>
+  </h:head>  
+  <h:body>
+    <h:form>
+      Enter first name:
+      <h:inputText 
+        id="first" 
+        value="#{dataTableBean.contact.firstName}">
+      </h:inputText>
+      <br></br>
+      Enter last name:
+      <h:inputText 
+        id="last" 
+        value="#{dataTableBean.contact.lastName}">
+      </h:inputText>
+      <br></br>
+      <h:commandButton 
+        value="Add"
+        action="#{dataTableBean.addContact()}">
+      </h:commandButton>
+      <hr></hr>
+      <h:panelGroup rendered="#{dataTableBean.hidden}">
+        <h:dataTable 
+          var="contact"
+          value="#{dataTableBean.contactList}"
+          rowClasses="order-table-even-row, order-table-odd-row">
+          <h:column>
+            <f:facet name="header">First Name</f:facet>
+              #{contact.firstName}
+          </h:column>
+          <h:column>
+            <f:facet name="header">Last Name</f:facet>
+              #{contact.lastName}
+          </h:column>               
+          <h:column>
+            <f:facet name="header">Remove</f:facet>
+            <h:commandButton 
+              value="Remove"
+              action="#{dataTableBean.deleteContact(contact)}">
+            </h:commandButton>
+          </h:column>
+        </h:dataTable>
+      </h:panelGroup>
+    </h:form>
+  </h:body>
+</html>
+
