@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <sys/select.h>
+#include <poll.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -12,10 +12,10 @@ int child_action();
 
 int main(int argc, char **argv) {
 	int pid;
-	int fifo[2], flags;
+	int flags;
 	int n,m;
 	char buffer[50];
-	fd_set readset;
+	struct pollfd fifos[2];
 	
 	mkfifo("/tmp/fifo1",0666);
 	mkfifo("/tmp/fifo2",0666);
@@ -31,29 +31,29 @@ int main(int argc, char **argv) {
 	}
 	
 	printf("Parent: before open \n");
-	fifo[0] = open("/tmp/fifo1",O_RDONLY,0);
-	fifo[1] = open("/tmp/fifo2",O_RDONLY,0);
-	printf("Parent: after open: fifos %d %d\n", fifo[0], fifo[1]);
+	fifos[0].fd = open("/tmp/fifo1",O_RDONLY,0);
+	fifos[0].events = POLLIN;
+	fifos[1].fd = open("/tmp/fifo2",O_RDONLY,0);
+	fifos[1].events = POLLIN;
+	printf("Parent: after open: fifos %d %d\n", fifos[0].fd, fifos[1].fd);
 	for (n=0;n<2; n++) {
-		flags = fcntl(fifo[n],F_GETFL);
+		flags = fcntl(fifos[n].fd,F_GETFL);
 		flags = flags + O_NONBLOCK;
-		fcntl(fifo[n],F_SETFL,flags);
+		fcntl(fifos[n].fd,F_SETFL,flags);
 	}
 	while(1) {
-		FD_ZERO(&readset);
-		FD_SET(fifo[0],&readset);
-		FD_SET(fifo[1],&readset);
-		n = select(fifo[1]+1, &readset,NULL,NULL,NULL);
+		n = poll(fifos,2,-1);
 		if (n > -1) {
 			for (m=0;m<2;m++) {
-				if(FD_ISSET(fifo[m],&readset) > 0) {
+				if(fifos[m].revents & POLLIN) {
 					memset(buffer,0,50);
-					n = read(fifo[m],buffer,50);
+					n = read(fifos[m].fd,buffer,50);
 					if (strncmp(buffer, "quit",4)==0) {
-						printf("Quitting from fifo %d\n",fifo[m]);
+						printf("Quitting from fifo %d\n",fifos[m].fd);
 						exit(0);
 					}
-					printf("%s from fifo %d\n",buffer,fifo[m]);
+					fifos[m].revents = 0;
+					printf("%s from fifo %d\n",buffer,fifos[m].fd);
 				}
 			}
 		} else {
