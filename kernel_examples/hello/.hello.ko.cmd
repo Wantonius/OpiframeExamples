@@ -1,0 +1,1 @@
+cmd_/home/erno/Programming/oulu_iot/kernel_examples/hello/hello.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/erno/Programming/oulu_iot/kernel_examples/hello/hello.ko /home/erno/Programming/oulu_iot/kernel_examples/hello/hello.o /home/erno/Programming/oulu_iot/kernel_examples/hello/hello.mod.o
