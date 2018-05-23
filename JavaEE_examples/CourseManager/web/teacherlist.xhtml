@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+  <h:head>
+    <title>Teacher List</title>
+  </h:head>
+  <h:body>
+    <h:form>
+      <h:link value="Back" outcome="index"></h:link>
+      <h:dataTable value="#{controller.findList(2)}" var="tchr">
+        <h:column>
+          <f:facet name="header">Title</f:facet>
+            #{tchr.title}
+        </h:column>
+        <h:column>
+          <f:facet name="header">First Name</f:facet>
+            #{tchr.firstName}
+        </h:column>
+        <h:column>
+          <f:facet name="header">Last Name</f:facet>
+            #{tchr.lastName}
+        </h:column>
+        <h:column>
+          <f:facet name="header">Address</f:facet>
+          #{tchr.address.streetAddress}, #{tchr.address.city}
+        </h:column>
+        <h:column>
+          <f:facet name="header">Remove</f:facet>
+          <h:commandButton value="remove" action="#{controller.remove(tchr)}"></h:commandButton>
+        </h:column>
+      </h:dataTable>
+    </h:form>
+  </h:body>
+</html>
+

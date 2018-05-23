@@ -1,0 +1,8 @@
+<h2>The Car List</h2>
+<ul>
+	<li *ngFor="let car of carList">
+		<p>Type:{{car.type}}</p>
+		<p>Price:{{car.price}}</p>
+		<p><button (click)="removeCar(car.id)">Sell</button></p>
+	</li>
+</ul>

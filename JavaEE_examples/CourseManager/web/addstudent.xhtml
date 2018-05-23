@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+  <h:head>
+    <title>Add student</title>
+  </h:head>
+  <h:body>
+    <h:form>
+      Enter first name: 
+      <h:inputText value="#{controller.firstName}"></h:inputText>
+      <br></br>
+      Enter last name: 
+      <h:inputText value="#{controller.lastName}"></h:inputText>
+      <br></br>
+      Enter street address: 
+      <h:inputText value="#{controller.streetAddress}"></h:inputText>
+      Enter city: 
+      <h:inputText value="#{controller.city}"></h:inputText>
+      <br></br>
+      Choose courses:
+      <h:selectManyCheckbox value="#{controller.selectedCourses}">
+        <f:selectItems value="#{controller.findList(4)}"></f:selectItems>
+      </h:selectManyCheckbox>
+      <h:commandButton value="add" action="#{controller.addStudent()}"></h:commandButton>
+    </h:form>
+  </h:body>
+</html>
+

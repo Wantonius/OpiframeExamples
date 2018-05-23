@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="contactapp">
+  <head>
+    <title>Contact book</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+    <script src="client.js"></script>
+  </head>
+  <body ng-controller="ContactController">
+    <div>
+      <form>
+        Enter username and password
+        <br/>
+        <input type="text" ng-model="userName"/>
+        <input type="password" ng-model="password"/>
+        <br/>
+        <button ng-click="register()">Register</button>
+        <button ng-click="login()">Login</button>
+      </form>
+      <form ng-submit="addContact()">
+        Enter first name:
+        <input type="text" ng-model="newContact.firstName"/>
+        <br></br>
+        Enter last name:
+        <input type="text" ng-model="newContact.lastName"/>
+        <br></br>
+        Enter phone number:
+        <input type="text" ng-model="newContact.phoneNumber"/>
+        <br></br>
+        Enter email:
+        <input type="email" ng-model="newContact.email"/>
+        <br></br>
+        What was your age again?
+        <input type="number" ng-model="newContact.age"/>
+        <br></br>
+        <input type="submit" value="Add"/>
+      </form>
+        <button ng-click="editContact()">Edit</button>
+      <hr/>
+      
+      <hr/>
+      <button ng-click="deleteAll()">delete list</button>
+      <br/>
+      <form ng-submit="find()">
+        Select search term:
+        <select ng-model="searchTerm" ng-options="choice for choice in choices"></select>
+        <input type="text" ng-model="value"/>
+        <input type="submit" value="search"/>
+        <br/>
+        Enter Age range:
+        <input type="number" ng-model="lowerLimit"/>
+        <input type="number" ng-model="upperLimit"/>
+        <button ng-click="findByAge()">Search by age</button>       
+      </form>
+      <div ng-repeat="contact in contacts">
+        First name:
+        {{contact.firstName}}
+        <br/>
+        Last name:
+        {{contact.lastName}}
+        <br/>
+        Phone number:
+        {{contact.phoneNumber}}
+        <br/>
+        Email:
+        {{contact.email}}
+        <br/>
+        Age:
+        {{contact.age}}
+        <br/>
+        <button ng-click="edit(contact)">Edit</button>
+      </div>
+    </div>
+  </body>
+</html>

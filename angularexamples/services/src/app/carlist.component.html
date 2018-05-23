@@ -1,0 +1,16 @@
+<div>
+	<form (ngSubmit)="addCar()" #carForm="ngForm">
+		<label for="type">Car Type</label>
+		<input type="text" id="type" 
+		required [(ngModel)]="car.type" name="type"/>
+		<label for="price">Car Price</label>
+		<input type="number" id="price" 
+		required [(ngModel)]="car.price" name="price"/>
+		<input type="submit" value="addCar"/>
+	</form>
+	<ul>
+		<li *ngFor="let c of carList">
+		Type:{{c.type}} Price:{{c.price}}
+		</li>
+	</ul>
+</div>

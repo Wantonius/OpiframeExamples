@@ -1,0 +1,21 @@
+<div>
+<h1>Apple List</h1>
+<form (ngSubmit)="addApple()" #appleForm="ngForm">
+	<div>
+		<label for="title">Apple Color</label>
+		<input type="text" id="title" required 
+		[(ngModel)]="apple.color" name="color"/>	
+	</div>
+	<input type="submit" value="Submit"/>
+<br/>
+</form>
+<ul>
+	<li *ngFor="let omena of apples; let idx = index">
+		Apple Color:{{omena.color}}
+		<br/>
+		<button (click)="removeApple(idx)">Eat</button>
+	</li>
+</ul>
+
+
+</div>
