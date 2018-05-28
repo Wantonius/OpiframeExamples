@@ -19,8 +19,9 @@ int main(int argc, char **argv) {
 	memset(&hints,0,sizeof(hints));
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_family = AF_INET;
-	if (getaddrinfo(argv[1],argv[2],&hints,&res)!=0) {
-		printf("Error getting address: %s",strerror(errno));
+	err = getaddrinfo(argv[1],argv[2],&hints,&res)
+	if (err!=0) {
+		printf("Error getting address: %s",gai_strerror(errno));
 		return 1;
 	}
 
