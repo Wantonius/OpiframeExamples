@@ -5,8 +5,8 @@
 
 #define MY_GPIO 4
 irqreturn_t my_irq_handler( int irq, void *dev) {
-        printk(KERN_DEBUG "irq handler" );
-        gpio_set_value(MY_GPIO, 1);
+        printk(KERN_DEBUG "irq handler\n" );
+        
         return IRQ_HANDLED;
 
 }
