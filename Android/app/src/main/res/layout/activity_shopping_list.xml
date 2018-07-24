@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ShoppingListActivity"
+    android:background="@color/backgroundblack">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addbutton"
+        android:layout_alignParentBottom="true"
+        android:background="@color/buttonbackground"
+        android:textColor="@color/buttonfont"
+        android:layout_centerHorizontal="true"
+        android:text="Add"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/shoppinglistview"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/addbutton">
+    </ListView>
+</RelativeLayout>
