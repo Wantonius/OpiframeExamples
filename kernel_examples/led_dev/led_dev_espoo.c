@@ -59,7 +59,7 @@ static int init_led_module(void) {
 		goto attr;
 	}
 	/*
-	if(!gpio_is_valid(LED_GPIO)<0) {
+	if(!gpio_is_valid(LED_GPIO)) {
 		printk(KERN_ALERT "Chosen gpio:%d not valid\n",LED_GPIO);
 		cdev_del(&my_dev->cdev);
 		goto attr;
@@ -79,6 +79,7 @@ mem:
 }
 
 static void remove_led_module(void) {
+	printk(KERN_DEBUG "Remove led dev\n");
 	cdev_del(&my_dev->cdev);
 	device_destroy(led_class, led_dev_number);
 	class_destroy(led_class);
@@ -90,11 +91,23 @@ static void remove_led_module(void) {
 	*/
 }
 static ssize_t led_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t count) {
-	return 0;
+	printk(KERN_DEBUG "Led store function called: buffer %s\n",buf);
+	if (led_on == 0) {
+		led_on = 1;
+		printk(KERN_DEBUG "Led device: led on\n");
+	} else {
+		led_on = 0;
+		printk(KERN_DEBUG "Led device: led off\n");
+	}
+	/*
+	gpio_set_value(LED_GPIO, led_on);
+	*/
+	return count;
 }
 
 static ssize_t led_show(struct device *dev, struct device_attribute *attr, char *buf) {
-	return 0;
+	printk(KERN_DEBUG "Led show called\n");
+	return 1;
 }
 
 MODULE_LICENSE("GPL");
