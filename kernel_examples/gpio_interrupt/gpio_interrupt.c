@@ -17,7 +17,7 @@ int init_my_gpio_module(void) {
                 printk(KERN_INFO "GPIO not valid\n");
                 return -EBUSY;
         }
-        ret = gpio_request_one(MY_GPIO, GPIOF_IN, "interrupt test");
+        ret = gpio_request(MY_GPIO, "interrupt test");
         if (ret <0 ){
                 printk(KERN_INFO "GPIO reuquest failed\n");
                 return -EBUSY;
@@ -28,21 +28,20 @@ int init_my_gpio_module(void) {
                 return -EBUSY;
         }
         printk(KERN_DEBUG "my irq id: %d\n", my_irq);
-        ret = request_any_context_irq(my_irq,  my_irq_handler, IRQF_TRIGGER_FALLING, "interrupt test", &my_irq_handler);
+        ret = request_irq(my_irq,  my_irq_handler, IRQF_TRIGGER_FALLING, "interrupt test", &my_irq_handler);
        
         if (ret <0 ){
                 printk(KERN_INFO "Request  irq context  failed\n");
                 return -EBUSY;
         }
 
-        gpio_set_value(MY_GPIO,0);
-        printk(KERN_DEBUG "Initialization done value: %d\n", gpio_get_value(MY_GPIO));
+        printk(KERN_DEBUG "Initialization done value\n");
         return 0;
 }
 void my_module_exit(void) {
-        free_irq(my_irq, NULL);
+        free_irq(my_irq, &my_irq_handler);
         gpio_free(MY_GPIO);
-        printk(KERN_DEBUG "Modlue exit\n");
+        printk(KERN_DEBUG "Module exit\n");
 
 }
 
