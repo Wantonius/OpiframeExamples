@@ -8,10 +8,40 @@ class App extends Component {
   constructor(props) {
 	  super(props);
 	  this.state= {
-		  shoppingList:[],
-		  id:100
+		  shoppingList:[]
 	  }
   }
+ 
+  componentWillMount() {
+	  this.getShoppingList();
+  }  
+  getShoppingList = () => {
+	  let getList = {
+		  method:'GET',
+		  mode:'cors',
+		  headers:{
+			  'Content-Type':'application/json'
+		  }
+	  }	  
+	  fetch("/api/shopping",getList).then((response) => {
+			if(response.ok) {
+				response.json().then((data) => {
+						console.log(data);
+						this.setState({
+							shoppingList:data
+						});
+				}).catch((error) => {
+					console.log(error);
+				});	
+			} else {
+				console.log("Response not ok");
+			}
+	  }).catch((error) => {
+			console.log("Server error:");
+			console.log(error);
+	  }); 	
+	  }
+  
   
   addToList = (item) => {
 	  console.log("addToList: App.js");
