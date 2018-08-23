@@ -35,8 +35,13 @@ public class BusinessCardProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        // Implement this to handle requests to delete one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
+        Log.d(TAG,"delete");
+        int count = 0;
+        count = writer.delete(TABLE_NAME,selection,selectionArgs);
+        if(count > 0) {
+            getContext().getContentResolver().notifyChange(uri,null);
+        }
+        return count;
     }
 
     @Override

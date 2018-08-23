@@ -52,7 +52,7 @@ public class BusinessCardList extends AppCompatActivity {
                 intent.putExtra("lastname",temp.getLastName());
                 intent.putExtra("company", temp.getCompany());
                 intent.putExtra("phone",temp.getPhone());
-                intent.putExtra("position", i);
+                intent.putExtra("position", temp.getId());
                 startActivityForResult(intent,200);
                 return true;
             }
@@ -103,9 +103,19 @@ public class BusinessCardList extends AppCompatActivity {
         if(requestCode==200) {
             if(resultCode == RESULT_OK) {
                 int pos = data.getIntExtra("position",-1);
-                BusinessCard temp = adapter.getItem(pos);
-                adapter.remove(temp);
-                adapter.notifyDataSetChanged();
+                if(pos > 0) {
+                    String where = "_id=?";
+                    String[] args = new String[]{""+pos};
+                    int count = resolver.delete(BusinessCard.CONTENT_URI,where,new String[]{""+pos});
+                    if(count > 0) {
+                        Cursor c = resolver.query(BusinessCard.CONTENT_URI,
+                                null,null,null,null);
+                        if(c.getCount() > 0) {
+                            adapter.clear();
+                            getDatabaseContent(c);
+                        }
+                    }
+                }
             }
         }
     }
