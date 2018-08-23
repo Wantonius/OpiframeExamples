@@ -17,7 +17,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddNewCard" />
-        <activity android:name=".ShowSingleCard"></activity>
+        <activity android:name=".ShowSingleCard" />
+
+        <provider
+            android:name=".BusinessCardProvider"
+            android:authorities="com.opiframe.android.businesscard.BusinessCardProvider"
+            android:enabled="true"
+            android:exported="true"></provider>
     </application>
 
 </manifest>

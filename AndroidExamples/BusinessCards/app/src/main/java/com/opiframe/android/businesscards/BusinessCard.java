@@ -1,16 +1,35 @@
 package com.opiframe.android.businesscards;
 
-public class BusinessCard {
+import android.net.Uri;
+import android.provider.BaseColumns;
 
+public class BusinessCard implements BaseColumns {
+
+    private int id;
     private String firstName;
     private String lastName;
-
-
-
     private String title;
     private String phone;
     private String company;
 
+    public static final String FIRST_NAME="firstname";
+    public static final String LAST_NAME="lastname";
+    public static final String TITLE="title";
+    public static final String PHONE="phone";
+    public static final String COMPANY="company";
+
+    public static final Uri CONTENT_URI =
+    Uri.parse("content://com.opiframe.android.businesscard.BusinessCardProvider/BusinessCard");
+
+    public static final String CONTENT_TYPE = "vnd.android.cursor.dir/com.opiframe.android.BusinessCard";
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getFirstName() {
         return firstName;
     }
