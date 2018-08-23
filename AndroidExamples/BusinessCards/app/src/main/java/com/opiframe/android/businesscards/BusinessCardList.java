@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -31,6 +32,21 @@ public class BusinessCardList extends AppCompatActivity {
         lw = (ListView)findViewById(R.id.lw);
         adapter = new BusinessCardAdapter(this,0,0);
         lw.setAdapter(adapter);
+        lw.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(BusinessCardList.this,ShowSingleCard.class);
+                BusinessCard temp = adapter.getItem(i);
+                intent.putExtra("title",temp.getTitle());
+                intent.putExtra("firstname",temp.getFirstName());
+                intent.putExtra("lastname",temp.getLastName());
+                intent.putExtra("company", temp.getCompany());
+                intent.putExtra("phone",temp.getPhone());
+                intent.putExtra("position", i);
+                startActivityForResult(intent,200);
+                return true;
+            }
+        });
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,6 +66,14 @@ public class BusinessCardList extends AppCompatActivity {
                 tempCard.setPhone(data.getStringExtra("phone"));
                 tempCard.setCompany(data.getStringExtra("company"));
                 adapter.add(tempCard);
+                adapter.notifyDataSetChanged();
+            }
+        }
+        if(requestCode==200) {
+            if(resultCode == RESULT_OK) {
+                int pos = data.getIntExtra("position",-1);
+                BusinessCard temp = adapter.getItem(pos);
+                adapter.remove(temp);
                 adapter.notifyDataSetChanged();
             }
         }

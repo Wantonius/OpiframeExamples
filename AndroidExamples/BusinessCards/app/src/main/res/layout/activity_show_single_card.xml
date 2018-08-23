@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundblack"
+    tools:context=".ShowSingleCard"
+    android:id="@+id/singlecardlayout">
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="40dp"
+    android:textSize="24dp"
+    android:textColor="@color/companyinfo"
+    android:id="@+id/titlesinglecard"/>
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/titlesinglecard"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="5dp"
+    android:textSize="24dp"
+    android:textColor="@color/companyinfo"
+    android:id="@+id/namesinglecard"/>
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:textSize="24dp"
+    android:textColor="@color/companyinfo"
+    android:layout_below="@id/namesinglecard"
+    android:layout_centerHorizontal="true"
+    android:id="@+id/companysinglecard" />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:textSize="24dp"
+    android:textColor="@color/companyinfo"
+    android:layout_below="@id/companysinglecard"
+    android:layout_centerHorizontal="true"
+    android:id="@+id/phonesinglecard"/>
+</RelativeLayout>
