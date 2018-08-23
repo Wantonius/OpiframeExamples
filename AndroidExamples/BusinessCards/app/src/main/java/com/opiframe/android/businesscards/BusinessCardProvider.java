@@ -1,12 +1,15 @@
 package com.opiframe.android.businesscards;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQuery;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.util.Log;
 
@@ -38,15 +41,20 @@ public class BusinessCardProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        // TODO: Implement this to handle requests for the MIME type of the data
-        // at the given URI.
-        throw new UnsupportedOperationException("Not yet implemented");
+        return BusinessCard.CONTENT_TYPE;
     }
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        // TODO: Implement this to handle requests to insert a new row.
-        throw new UnsupportedOperationException("Not yet implemented");
+        Log.d(TAG,"Insert");
+        long rowId = 0;
+        rowId = writer.insert(TABLE_NAME,"",values);
+        if(rowId > 0) {
+            Uri temp = ContentUris.withAppendedId(uri,rowId);
+            getContext().getContentResolver().notifyChange(temp,null);
+            return temp;
+        }
+        return null;
     }
 
     @Override
@@ -65,8 +73,10 @@ public class BusinessCardProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
-        // TODO: Implement this to handle query requests from clients.
-        throw new UnsupportedOperationException("Not yet implemented");
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+        builder.setTables(TABLE_NAME);
+        Cursor c = builder.query(reader,projection,selection,selectionArgs,null,null,sortOrder);
+        return c;
     }
 
     @Override

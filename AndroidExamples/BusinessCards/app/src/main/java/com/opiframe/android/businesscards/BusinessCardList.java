@@ -1,7 +1,10 @@
 package com.opiframe.android.businesscards;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,15 +26,22 @@ public class BusinessCardList extends AppCompatActivity {
     private ListView lw;
     private Button addButton;
     private BusinessCardAdapter adapter;
+    private ContentResolver resolver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG,"onCreate");
         setContentView(R.layout.activity_business_card_list);
+        resolver = getContentResolver();
         addButton = (Button)findViewById(R.id.addbutton);
         lw = (ListView)findViewById(R.id.lw);
         adapter = new BusinessCardAdapter(this,0,0);
         lw.setAdapter(adapter);
+        Cursor c = resolver.query(BusinessCard.CONTENT_URI, null,null,null,null);
+        if(c.getCount() > 0) {
+            this.getDatabaseContent(c);
+        }
         lw.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -56,17 +66,38 @@ public class BusinessCardList extends AppCompatActivity {
             }
         });
     }
+
+    private void getDatabaseContent(Cursor c) {
+        c.moveToFirst();
+        while(c.moveToNext()) {
+            BusinessCard temp = new BusinessCard();
+            temp.setFirstName(c.getString(c.getColumnIndex(BusinessCard.FIRST_NAME)));
+            temp.setLastName(c.getString(c.getColumnIndex(BusinessCard.LAST_NAME)));
+            temp.setCompany(c.getString(c.getColumnIndex(BusinessCard.COMPANY)));
+            temp.setPhone(c.getString(c.getColumnIndex(BusinessCard.PHONE)));
+            temp.setId(c.getInt(c.getColumnIndex(BusinessCard._ID)));
+            temp.setTitle(c.getString(c.getColumnIndex(BusinessCard.TITLE)));
+            adapter.add(temp);
+        }
+        adapter.notifyDataSetChanged();
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==100){
             if(resultCode==RESULT_OK) {
-                BusinessCard tempCard = new BusinessCard();
-                tempCard.setFirstName(data.getStringExtra("firstname"));
-                tempCard.setLastName(data.getStringExtra("lastname"));
-                tempCard.setTitle(data.getStringExtra("title"));
-                tempCard.setPhone(data.getStringExtra("phone"));
-                tempCard.setCompany(data.getStringExtra("company"));
-                adapter.add(tempCard);
-                adapter.notifyDataSetChanged();
+                ContentValues v = new ContentValues();
+                v.put(BusinessCard.FIRST_NAME, data.getStringExtra("firstname"));
+                v.put(BusinessCard.LAST_NAME, data.getStringExtra("lastname"));
+                v.put(BusinessCard.COMPANY,data.getStringExtra("company"));
+                v.put(BusinessCard.TITLE,data.getStringExtra("title"));
+                v.put(BusinessCard.PHONE,data.getStringExtra("phone"));
+                resolver.insert(BusinessCard.CONTENT_URI, v);
+                Cursor c = resolver.query(BusinessCard.CONTENT_URI, null,null,null,null);
+                if(c.getCount() > 0) {
+                    adapter.clear();
+                    getDatabaseContent(c);
+                }
+
             }
         }
         if(requestCode==200) {
