@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Details">
+<EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Enter first name"
+    android:textSize="14dp"
+    android:id="@+id/firstnameEdit"
+    android:layout_alignParentTop="true"/>
+<EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Enter last name"
+    android:textSize="14dp"
+    android:id="@+id/lastnameEdit"
+    android:layout_below="@id/firstnameEdit"/>
+<EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Enter title"
+    android:textSize="14dp"
+    android:id="@+id/titleEdit"
+    android:layout_below="@id/lastnameEdit"/>
+<EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Enter address"
+    android:textSize="14dp"
+    android:id="@+id/addressEdit"
+    android:layout_below="@id/titleEdit"/>
+<EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Enter email"
+    android:textSize="14dp"
+    android:id="@+id/emailEdit"
+    android:inputType="textEmailAddress"
+    android:layout_below="@id/addressEdit"/>
+<EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Enter phone number"
+    android:textSize="14dp"
+    android:id="@+id/phoneEdit"
+    android:inputType="phone"
+    android:layout_below="@id/emailEdit"/>
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/phoneEdit"
+    android:layout_centerHorizontal="true"
+    android:id="@+id/saveButton"
+    android:text="Save"/>
+</RelativeLayout>
