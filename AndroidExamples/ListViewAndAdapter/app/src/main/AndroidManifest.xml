@@ -16,7 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Details"></activity>
+        <activity android:name=".Details" />
+        <activity android:name=".ContactCard" />
+
+        <provider
+            android:name=".ContactCardProvider"
+            android:authorities="com.opiframe.android.listviewandadapter.ContactCardProvider"
+            android:enabled="true"
+            android:exported="true"></provider>
     </application>
 
 </manifest>
