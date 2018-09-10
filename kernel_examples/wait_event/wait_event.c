@@ -39,7 +39,7 @@ struct my_dev {
 	char name[8];
 	int max_size;
 	int written;
-	wait_queue_head_t readers,writers;
+	wait_queue_head_t readers,writers, openread,openwrite;
 	struct mutex mutex;
 	int reader;
 	int writer;
@@ -74,6 +74,8 @@ int __init my_init(void) {
 	mutex_init(&device->mutex);
 	init_waitqueue_head(&device->readers);
 	init_waitqueue_head(&device->writers);
+	init_waitqueue_head(&device->openread);
+	init_waitqueue_head(&device->openwrite);
 	if (cdev_add(&device->cdev, my_dev_nro,1) < 0) {
 		printk(KERN_ALERT "Failed to cdev_add\n");
 		return -1;
@@ -110,26 +112,34 @@ int my_open(struct inode *inode, struct file *fp) {
 		printk(KERN_DEBUG "Read only mode writers:%d\n",device->writer);	
 		if(device->writer == 0) {
 			printk(KERN_DEBUG "No writers. Waiting in queue\n");
+			if(fp->f_flags & O_NONBLOCK) {
+				printk(KERN_DEBUG "Non-block mode and no writers. Returning with -EAGAIN.\n");
+				return -EAGAIN;
+			}
 			device->reader = 1;
 			mutex_unlock(&device->mutex);
-			if(wait_event_interruptible(device->readers, device->writer > 0 || device->written > 0)) {
+			if(wait_event_interruptible(device->openread, device->writer > 0 || device->written > 0)) {
 				device->reader = 0;	
 				return -EINTR;
 			}
 		} else {
-			printk(KERN_DEBUG "Writer found. Kicking writer wait queue\n")
+			printk(KERN_DEBUG "Writer found. Kicking writer wait queue\n");
 			device->reader = 1;
 			mutex_unlock(&device->mutex);
-			wake_up_interruptible(&device->writers);
+			wake_up_interruptible(&device->openwrite);
 		}
 	}
 	if((fp->f_flags & O_ACCMODE) == O_WRONLY) {
 		printk(KERN_DEBUG "Write only mode. Readers:%d\n",device->reader);	
 		if(device->reader == 0) {
 			printk(KERN_DEBUG "No readers. Waiting in wait queue\n");
+			if(fp->f_flags & O_NONBLOCK) {
+				printk(KERN_DEBUG "Non-block mode and no readers. Returning with -EAGAIN.\n");
+				return -EAGAIN;
+			}
 			device->writer = 1;
 			mutex_unlock(&device->mutex);
-			if(wait_event_interruptible(device->writers, device->reader > 0)) {
+			if(wait_event_interruptible(device->openwrite, device->reader > 0)) {
 				device->writer = 0;	
 				return -EINTR;
 			}
@@ -137,7 +147,7 @@ int my_open(struct inode *inode, struct file *fp) {
 			printk(KERN_DEBUG "Reader found. Kicking reader wait queue\n");
 			device->writer = 1;
 			mutex_unlock(&device->mutex);
-			wake_up_interruptible(&device->readers);
+			wake_up_interruptible(&device->openread);
 		}
 	}
 	device->connections++;
@@ -147,7 +157,16 @@ int my_open(struct inode *inode, struct file *fp) {
 int my_close(struct inode *inode, struct file *fp) {
 	struct my_dev *device;
 	printk(KERN_DEBUG "Closing device my_dev.\n");	
-	device = fp->private_data;	
+	device = fp->private_data;
+	if((fp->f_flags & O_ACCMODE) == O_WRONLY) {	
+		device->writer--;
+		if(device->writer == 0) {
+			wake_up_interruptible(&device->readers);
+		}
+	}
+	if((fp->f_flags & O_ACCMODE) == O_RDONLY) {	
+		device->reader--;
+	}	
 	device->connections--;
 	if(device->connections == 0 && device->written == 0) {	
 		printk(KERN_DEBUG "Closing for the last time. Freeing memory\n");
@@ -167,9 +186,19 @@ ssize_t my_read(struct file *fp, char __user *from, size_t count, loff_t *positi
 	}
 	printk(KERN_DEBUG "Currently unread stuff %d\n", device->written);
 	if(count == 0)  {
-		printk(KERN_DEBUG "Nothing to read. Exiting\n");
-		return 0;
-	}	
+		printk(KERN_DEBUG "Nothing to read. \n");
+		if(fp->f_flags & O_NONBLOCK) {
+			printk(KERN_DEBUG "Non-block mode. Returning with -EAGAIN.\n");
+			return -EAGAIN;
+		}
+		printk(KERN_DEBUG "Sleeping in the read queue. \n");
+		if(wait_event_interruptible(device->readers, device->written >0)) {
+			printk(KERN_DEBUG "Signal interruption\n");
+			return -ERESTARTSYS;
+		}
+
+	}
+	count=device->written;	
 	n = copy_to_user(from, device->data_buffer, count);
 	printk(KERN_DEBUG "Failed to read %d bytes\n", n);
 	printk(KERN_DEBUG "Actually read %d bytes\n",(int)count);
@@ -189,6 +218,7 @@ ssize_t my_write(struct file *fp, const char __user *to, size_t count, loff_t *p
 	device->written = count;
 	printk(KERN_DEBUG "Failed to write %d bytes\n", n);
 	printk(KERN_DEBUG "Currently written %d\n", device->written);
+	wake_up_interruptible(&device->readers);
 	return count-n;
 }
 
