@@ -1,0 +1,20 @@
+{
+  "name": "simple_form",
+  "version": "1.0.0",
+  "description": "simple form example using POST",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "post",
+    "form",
+    "example"
+  ],
+  "author": "erno",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3"
+  }
+}
