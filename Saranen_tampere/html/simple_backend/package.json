@@ -1,0 +1,19 @@
+{
+  "name": "simplebackend",
+  "version": "1.0.0",
+  "description": "simple backend for data management",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "backend"
+  ],
+  "author": "erno",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3"
+  }
+}

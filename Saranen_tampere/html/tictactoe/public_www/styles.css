@@ -1,0 +1,11 @@
+.container {
+	width:330px;
+	background-color:black;
+}
+.gameinput {
+	width:100px;
+	height:100px;
+	font-family:Arial;
+	font-size:60px;
+	text-align:center;
+}
