@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundSecond"
+    tools:context=".GameScreenActivity">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_centerInParent="true"
+    android:background="@color/backgroundBlack">
+<RelativeLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:id="@+id/firstRow"
+    android:layout_above="@id/secondRow"
+    android:layout_marginBottom="40dp"
+    android:layout_marginTop="40dp">
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/firstButton"
+        android:layout_alignParentLeft="true"
+        android:background="@color/gameGreen"/>
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/secondButton"
+        android:layout_centerHorizontal="true"
+        android:background="@color/gameGreen"/>
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/thirdButton"
+        android:background="@color/gameGreen"/>
+</RelativeLayout>
+<RelativeLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:id="@+id/secondRow"
+    android:layout_centerInParent="true"
+    android:layout_marginBottom="40dp">
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/fourthButton"
+        android:background="@color/gameGreen"/>
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/fifthButton"
+        android:background="@color/gameGreen"/>
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/sixthButton"
+        android:background="@color/gameGreen"/>
+</RelativeLayout>
+<RelativeLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:id="@+id/thirdRow"
+    android:layout_below="@id/secondRow"
+    android:layout_marginBottom="40dp">
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/seventhButton"
+        android:background="@color/gameGreen"/>
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/eighthButton"
+        android:background="@color/gameGreen"/>
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/ninthButton"
+        android:background="@color/gameGreen"/>
+</RelativeLayout>
+</LinearLayout>
+
+</RelativeLayout>
