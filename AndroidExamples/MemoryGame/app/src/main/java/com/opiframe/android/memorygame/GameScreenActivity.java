@@ -19,7 +19,7 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
     private int currentScore = 0, currentIndex = 0;
     private List<Integer> buttonList = new ArrayList<>();
     private Button first,second,third,fourth,fifth,sixth,seventh,eighth,ninth;
-    private int delayValue = 500;
+    private int delayValue = 200;
     private Random random;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +141,7 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
 
             for(int i = 0; i < buttonList.size(); i++) {
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(delayValue);
                 } catch (InterruptedException e) {
                     Log.e("AsyncTask", "Interrupted exception");
                     finish();
@@ -150,7 +150,7 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
 
                     publishProgress(buttonList.get(i));
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(delayValue);
                     } catch (InterruptedException e) {
                         Log.e("AsyncTask", "Interrupted exception");
                         finish();
