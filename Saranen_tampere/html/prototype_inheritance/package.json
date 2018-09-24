@@ -1,0 +1,18 @@
+{
+  "name": "prototype_inheritance",
+  "version": "1.0.0",
+  "description": "prototype inheritance javascript examples",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "prototype",
+    "inheritance"
+  ],
+  "author": "erno",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}

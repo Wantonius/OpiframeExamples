@@ -1,0 +1,17 @@
+{
+  "name": "observable",
+  "version": "1.0.0",
+  "description": "observables using rxjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "observable"
+  ],
+  "author": "erno",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}

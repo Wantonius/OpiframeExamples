@@ -1,0 +1,14 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+ <div class="topnav" *ngIf="isLogged;else notLogged">
+	<a [routerLink]="['/CarList']">Car List</a>
+	<a [routerLink]="['/CarForm']">Add Car</a>
+	<a href="#" (click)="logout()">Logout</a>
+ </div>
+ <ng-template #notLogged>
+	<div class="topnav">
+		<a [routerLink]="['/Login']"></a>
+	</div>
+ </ng-template> 
+ <router-outlet></router-outlet>
+</div>

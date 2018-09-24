@@ -1,0 +1,16 @@
+<table>
+	<thead>
+		<tr>
+			<th>Car Type</th>
+			<th>Car Price</th>
+			<th>Buy Car</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let c of carList;let idx=index">
+			<td>{{c.type}}</td>      
+			<td>{{c.price}}</td>
+			<td><button (click)="removeCar(idx)">Remove</button></td>
+		</tr>
+	</tbody>
+</table>

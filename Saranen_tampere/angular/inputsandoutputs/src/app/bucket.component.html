@@ -1,0 +1,7 @@
+<div>
+<div *ngFor="let a of appleList">
+	<apple color={{a.color}} (appleEmits)="transmitMessage($event)"></apple>
+</div>
+<p>{{message}}</p>
+<button (click)="pickApple()">Pick Apple</button>
+</div>

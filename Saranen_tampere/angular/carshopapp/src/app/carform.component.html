@@ -1,0 +1,16 @@
+<form (ngSubmit)="addCar()" #carForm="ngForm">
+	<label for="type">Car Type</label>
+	<input type="text"
+		   name="type"
+		   id="type"
+		   required
+		   [(ngModel)]="car.type"/>
+	<label for="price">Car Price</label>
+	<input type="number"
+		   name="price"
+		   id="price"
+		   required
+		   [(ngModel)]="car.price"/>
+	<br/>
+	<input type="submit" value="Add"/>
+</form>

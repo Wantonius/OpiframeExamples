@@ -1,0 +1,20 @@
+<div>
+	<h5>One-way databinding example</h5>
+	<input type="text" [value]="welcomeText"/>
+	<h5>Two-way binding with ngModel from Forms</h5>
+	<input type="text" [(ngModel)]="myName"/>
+	<p>Hello, {{myName}}</p>
+	<h5>Two-way binding with reference variable</h5>
+	Enter your name:
+	<input type="text" #txtInput (keyup)="0"/>
+	<p> Welcome, {{txtInput.value}} </p>
+	<h5> Event Binding </h5>
+	<button (click)="youClicked()">Click me</button>
+	{{clickMessage}}
+	<h5> Two-way binding with reference variable and event </h5>
+	Enter your name:
+	<input type="text" #myInput (keyup)="0"/>
+	<button (click)="eventHandler(myInput.value)">Hello</button>
+	<br/>
+	{{eventMessage}}
+</div>

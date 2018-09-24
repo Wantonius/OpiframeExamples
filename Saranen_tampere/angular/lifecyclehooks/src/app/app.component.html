@@ -1,0 +1,15 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{title}}!
+  </h1>
+	<h5>Lifecycle event log</h5>
+	<ul>
+		<li *ngFor="let log of logs">
+			{{log}}
+		</li>
+	</ul>
+	<child *ngIf="showChild"
+		[name]="name"
+		(log)="onLog($event)"></child>
+</div>
